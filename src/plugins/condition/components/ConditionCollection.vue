@@ -68,14 +68,14 @@
                                        :condition-index="index"
                                        @updateCurrentCondition="updateCurrentCondition"
                                        @removeCondition="removeCondition"
-                                       @conditionResultUpdated="handleConditionResult"
+                                       @condition-result-updated="handleConditionResult"
                                        @setMoveIndex="setMoveIndex"
                         />
                     </div>
                     <div v-else>
                         <Condition :condition-identifier="conditionIdentifier"
                                    :current-condition-identifier="currentConditionIdentifier"
-                                   @conditionResultUpdated="handleConditionResult"
+                                   @condition-result-updated="handleConditionResult"
                         />
                     </div>
                 </li>

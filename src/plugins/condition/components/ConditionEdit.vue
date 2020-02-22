@@ -272,7 +272,7 @@ export default {
             }
         },
         handleConditionResult(args) {
-            this.$emit('conditionResultUpdated', {
+            this.$emit('condition-result-updated', {
                 id: this.conditionIdentifier,
                 result: args.data.result
             })
