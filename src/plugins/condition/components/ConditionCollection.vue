@@ -117,6 +117,7 @@ export default {
     mounted() {
         this.telemetryObjs = [];
         this.conditionResults = {};
+        this.output = undefined;
         this.instantiate = this.openmct.$injector.get('instantiate');
         this.composition = this.openmct.composition.get(this.domainObject);
         this.composition.on('add', this.addTelemetry);
@@ -179,7 +180,21 @@ export default {
         handleConditionResult(args) {
             let idAsString = this.openmct.objects.makeKeyString(args.id);
             this.conditionResults[idAsString] = args.result;
-            this.updateCurrentConditionId();
+
+            if (this.shouldUpdateOutput(idAsString, args.result)) {
+                this.updateCurrentConditionId();
+            }
+        },
+        shouldUpdateOutput(id, result) {
+            if (result && this.output !== id) {
+                return true;
+            }
+
+            if (this.output === id && !result) {
+                return true;
+            }
+
+            return false;
         },
         updateCurrentConditionId() {
             let currentConditionIdentifier = this.conditionCollection[this.conditionCollection.length-1];
@@ -188,10 +203,11 @@ export default {
                 if (this.conditionResults[conditionIdAsString]) {
                     //first condition to be true wins
                     currentConditionIdentifier = this.conditionCollection[i];
+                    this.output = conditionIdAsString;
                     break;
                 }
             }
-            this.$emit('currentConditionUpdated', currentConditionIdentifier);
+            this.$emit('current-condition-updated', currentConditionIdentifier);
         },
         addTelemetry(telemetryDomainObject) {
             this.telemetryObjs.push(telemetryDomainObject);

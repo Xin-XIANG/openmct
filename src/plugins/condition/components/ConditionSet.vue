@@ -25,8 +25,9 @@
     <div class="c-sw-edit__ui holder">
         <CurrentOutput :condition="currentCondition" />
         <TestData :is-editing="isEditing" />
-        <ConditionCollection :is-editing="isEditing"
-                             @currentConditionUpdated="updateCurrentCondition"
+        <ConditionCollection
+            :is-editing="isEditing"
+            @current-condition-updated="updateCurrentCondition"
         />
     </div>
 </div>
